@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boolzapp</title>
+    <!-- FONTAWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- VUE -->
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <!-- LEFT COLUMN -->
+        <div class="left">
+          <!-- HEADER -->
+          <header class="header">
+            <div class="avatar">
+              <img src="assets/avatar_io.jpg" alt="" />
+              <span class="avatar-name">Sophia</span>
+            </div>
+
+            <div class="actions">
+              <i class="fa-solid fa-circle-notch"></i>
+              <i class="fa-solid fa-message"></i>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+          </header>
+          <!-- NOTIFICATIONS -->
+          <div class="notifications">Ricevi notifiche dei nuovi messaggi</div>
+
+          <!-- SEARCH BAR -->
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" />
+          </div>
+          <!-- CONTACTS -->
+          <div class="contact-list">
+            <div class="contact-item" v-for="contact in contacts">
+              <div class="contact-info">
+                <img :src="'assets/avatar'+contact.avatar+'.jpg'" alt="" />
+                <div class="contact-name">
+                  <h3>{{contact.name}}</h3>
+                  <p>{{contact.messages[contact.messages.length-1].message}}</p>
+                </div>
+              </div>
+              <div class="contact-time">
+                {{contact.messages[contact.messages.length-1].date}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT COLUMN -->
+        <div class="right">
+          <header class="header">
+            <div class="avatar">
+              <img
+                :src="'assets/avatar'+ contacts[activeIndex].avatar +'.jpg'"
+                alt=""
+              />
+              <div>
+                <p class="avatar-name">{{contacts[activeIndex].name}}</p>
+                <p>Ultimo accesso oggi alle 12:00</p>
+              </div>
+            </div>
+            <div class="actions">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <i class="fa-solid fa-paperclip"></i>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+          </header>
+          <!-- MESSAGES-CONTAINER -->
+          <main class="messages-container">
+            <div class="message-row send">
+              <div class="message">Hai portato a spasso il cane?</div>
+            </div>
+            <div class="message-row recieved">
+              <div class="message">Hai portato a spasso il cane?</div>
+            </div>
+          </main>
+          <!-- NEW MESSAGE -->
+          <footer class="footer"></footer>
+        </div>
+      </div>
+    </div>
+    <!-- JS -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
