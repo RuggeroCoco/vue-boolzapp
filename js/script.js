@@ -1,9 +1,12 @@
 const { createApp } = Vue;
 
+const dateTime = luxon.DateTime;
+
 createApp({
   data() {
     return {
       activeIndex: 0,
+      newMessage: "",
       contacts: [
         {
           name: "Michele",
@@ -17,7 +20,7 @@ createApp({
             },
             {
               date: "10/01/2020 15:50:00",
-              message: "Ricordati di stendere i panni",
+              message: "Come stai?",
               status: "sent",
             },
             {
@@ -168,5 +171,25 @@ createApp({
         },
       ],
     };
+  },
+  methods: {
+    changeActiveIndex(newIndex) {
+      this.activeIndex = newIndex;
+    },
+    formatDate(date) {
+      const formattedDate = dateTime.fromFormat(date, "dd/MM/yyyy hh:mm:ss");
+      return formattedDate.toLocaleString(dateTime.TIME_24_SIMPLE);
+    },
+    addNewMessage() {
+      if (this.newMessage.length > 0) {
+        const message = {
+          message: this.newMessage,
+          date: dateTime.now().toFormat("dd/MM/yyyy hh:mm:ss"),
+          status: "sent",
+        };
+        this.contacts[this.activeIndex].messages.push(message);
+        this.newMessage = "";
+      }
+    },
   },
 }).mount("#app");

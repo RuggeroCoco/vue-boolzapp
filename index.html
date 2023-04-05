@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="css/style.css" />
     <!-- VUE -->
     <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <!-- LUXON -->
+    <script src="
+      https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
+    "></script>
   </head>
   <body>
     <div id="app">
@@ -37,16 +41,29 @@
             </div>
           </header>
           <!-- NOTIFICATIONS -->
-          <div class="notifications">Ricevi notifiche dei nuovi messaggi</div>
+          <div class="notifications">
+            <div><i class="fa-regular fa-bell-slash"></i></div>
+            <div>
+              Ricevi notifiche dei nuovi messaggi
+              <div>
+                <a href="">Attiva notifiche desktop</a>
+              </div>
+            </div>
+          </div>
 
           <!-- SEARCH BAR -->
           <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" />
+            <input type="text" placeholder="Cerca o inizia una nuova chat" />
           </div>
           <!-- CONTACTS -->
           <div class="contact-list">
-            <div class="contact-item" v-for="contact in contacts">
+            <div
+              class="contact-item"
+              :class="{'active': index === activeIndex}"
+              v-for="(contact, index) in contacts"
+              @click="changeActiveIndex(index)"
+            >
               <div class="contact-info">
                 <img :src="'assets/avatar'+contact.avatar+'.jpg'" alt="" />
                 <div class="contact-name">
@@ -55,7 +72,8 @@
                 </div>
               </div>
               <div class="contact-time">
-                {{contact.messages[contact.messages.length-1].date}}
+                {{formatDate(
+                contact.messages[contact.messages.length-1].date)}}
               </div>
             </div>
           </div>
@@ -81,15 +99,26 @@
           </header>
           <!-- MESSAGES-CONTAINER -->
           <main class="messages-container">
-            <div class="message-row send">
-              <div class="message">Hai portato a spasso il cane?</div>
-            </div>
-            <div class="message-row recieved">
-              <div class="message">Hai portato a spasso il cane?</div>
+            <div
+              class="message-row"
+              :class="message.status"
+              v-for="message in contacts[activeIndex].messages"
+            >
+              <div class="message">
+                <p>{{message.message}}</p>
+                <p class="date">{{formatDate(message.date)}}</p>
+              </div>
             </div>
           </main>
           <!-- NEW MESSAGE -->
-          <footer class="footer"></footer>
+          <footer class="footer">
+            <input
+              type="text"
+              placeholder="Scrivi un messaggio"
+              v-model.trim="newMessage"
+              @keyup.enter="addNewMessage()"
+            />
+          </footer>
         </div>
       </div>
     </div>

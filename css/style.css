@@ -71,19 +71,27 @@ body {
 }
 /* MAIN */
 .notifications {
+  display: flex;
   background-color: lightblue;
   height: 60px;
-  padding: 0 10px;
   display: flex;
   align-items: center;
+  padding: 10px;
+}
+
+.notifications i {
+  padding: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: white;
 }
 
 .search-box {
   height: 60px;
   background-color: white;
   display: flex;
-  align-items: center;
-  padding: 0 10px;
+  align-items: stretch;
+  padding: 15px 10px;
 }
 
 .search-box input {
@@ -113,6 +121,10 @@ body {
   justify-content: space-between;
   padding: 5px 10px;
   border-bottom: 1px solid gray;
+}
+
+.active {
+  background-color: lightblue;
 }
 
 .contact-info {
@@ -146,11 +158,11 @@ body {
   margin-bottom: 10px;
 }
 
-.message-row.send {
+.message-row.sent {
   justify-content: end;
 }
 
-.message-row.recieved {
+.message-row.received {
   justify-content: start;
 }
 
@@ -162,16 +174,30 @@ body {
   border-radius: 10px;
 }
 
-.send .message {
-  background-color: lightgreen;
+.sent .message {
+  background-color: rgb(172, 226, 172);
 }
 
-.recieved .message {
+.received .message {
   background-color: white;
+}
+
+.message .date {
+  text-align: right;
+  font-size: 12px;
 }
 
 /* FOOTER */
 .footer {
   height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: beige;
+}
+
+.footer input {
+  padding: 10px;
+  width: 60%;
+  border-radius: 5px;
 }
