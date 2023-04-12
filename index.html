@@ -54,14 +54,18 @@
           <!-- SEARCH BAR -->
           <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Cerca o inizia una nuova chat" />
+            <input
+              type="text"
+              placeholder="Cerca o inizia una nuova chat"
+              v-model="searchText"
+            />
           </div>
           <!-- CONTACTS -->
           <div class="contact-list">
             <div
               class="contact-item"
               :class="{'active': index === activeIndex}"
-              v-for="(contact, index) in contacts"
+              v-for="(contact, index) in filteredList"
               @click="changeActiveIndex(index)"
             >
               <div class="contact-info">
@@ -82,12 +86,9 @@
         <div class="right">
           <header class="header">
             <div class="avatar">
-              <img
-                :src="'assets/avatar'+ contacts[activeIndex].avatar +'.jpg'"
-                alt=""
-              />
+              <img :src="`assets/avatar${currentContact.avatar}.jpg`" alt="" />
               <div>
-                <p class="avatar-name">{{contacts[activeIndex].name}}</p>
+                <p class="avatar-name">{{currentContact.name}}</p>
                 <p>Ultimo accesso oggi alle 12:00</p>
               </div>
             </div>
@@ -100,9 +101,9 @@
           <!-- MESSAGES-CONTAINER -->
           <main class="messages-container">
             <div
+              v-for="message in currentContact.messages"
               class="message-row"
               :class="message.status"
-              v-for="message in contacts[activeIndex].messages"
             >
               <div class="message">
                 <p>{{message.message}}</p>

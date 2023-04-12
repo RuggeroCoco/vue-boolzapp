@@ -6,6 +6,7 @@ createApp({
   data() {
     return {
       activeIndex: 0,
+      searchText: "",
       newMessage: "",
       contacts: [
         {
@@ -172,6 +173,16 @@ createApp({
       ],
     };
   },
+  computed: {
+    currentContact() {
+      return this.contacts[this.activeIndex];
+    },
+    filteredList() {
+      return this.contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    },
+  },
   methods: {
     changeActiveIndex(newIndex) {
       this.activeIndex = newIndex;
@@ -182,14 +193,29 @@ createApp({
     },
     addNewMessage() {
       if (this.newMessage.length > 0) {
-        const message = {
-          message: this.newMessage,
-          date: dateTime.now().toFormat("dd/MM/yyyy hh:mm:ss"),
-          status: "sent",
-        };
-        this.contacts[this.activeIndex].messages.push(message);
-        this.newMessage = "";
+        this.sendMessage();
+        const dialogIndex = this.activeIndex;
+        setTimeout(() => {
+          this.receiveMessage(dialogIndex);
+        }, 1000);
       }
+    },
+    sendMessage() {
+      const message = {
+        message: this.newMessage,
+        date: dateTime.now().toFormat("dd/MM/yyyy hh:mm:ss"),
+        status: "sent",
+      };
+      this.contacts[this.activeIndex].messages.push(message);
+      this.newMessage = "";
+    },
+    receiveMessage(dialogIndex) {
+      const message = {
+        message: "ok",
+        date: dateTime.now().toFormat("dd/MM/yyyy hh:mm:ss"),
+        status: "received",
+      };
+      this.contacts[dialogIndex].messages.push(message);
     },
   },
 }).mount("#app");
